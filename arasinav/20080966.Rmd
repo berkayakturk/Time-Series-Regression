@@ -1,0 +1,58 @@
+---
+title: "Dow Jones, NASDAQ, S&P-500 ve Altın Fiyatlarının Bist-100 Üzerindeki Etkisi"
+author: 
+  - Şeyhmus Aslan[^1]
+bibliography: ../bibliography/biblio.bib
+csl: ../csl/apa-tr.csl
+header-includes:
+  - \usepackage{polyglossia}
+  - \setmainlanguage{turkish}
+  - \usepackage{booktabs}
+  - \usepackage{caption} 
+  - \captionsetup[table]{skip=10pt}
+output:
+  bookdown::pdf_document2:
+    fig_caption: yes
+    fig_height: 3
+    fig_width: 4
+    keep_tex: no
+    latex_engine: xelatex
+    number_sections: yes
+    toc: no
+geometry: margin=1in
+link-citations: yes
+urlcolor: blue
+fontsize: 12pt
+biblio-style: apalike
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+<!-- ======================================================================= -->
+<!-- ============================== NOTLAR ================================= -->
+<!-- ======================================================================= -->
+[^1]: 20080966
+
+
+# Giriş
+
+Bu çalışmada, Türkiye'deki Borsa İstanbul 100 (Bist 100) endeksini etkileyen Dünyanın en büyük hisse senetleri olan Dow Jones, NASDAQ, S&P 500 ve altın hisse fiyatları ile analiz edilmesi amaçlanmıştır. Bu amaç doğrultusunda, Dow Jones, NASDAQ, S&P 500 ve altın hisselerin, birlikte Bist 100'e olan etkileri çok değişkenli doğrusal regresyon analizi ile incelenmiştir ve korelasyon değerleri yorumlanmıştır. Bu regresyon ve korelasyon analizinin uygulanabilmesi için bu beş endeksin 24.03.2021-24.03.2023 dönemi kapanış değerleri kullanılmıştır. Son zamanlarda Bist 100 endeksindeki uzun süreli artışının ve kısa süreli azalışının, teorik beklentilerle uyum halinde olduğu görülmüştür. Dow Jones, NASDAQ, S&P 500 ve altın endekslerine bağlı olduğu ve bu endekslerinin birlikte, Bist 100 üzerinde istatistiksel olarak anlamlı bir etkisi olduğu bulunmuştur. Bu etki bazı endeksler için pozitifken bazıları için negatiftir. Çok değişkenli regresyon analizi ve korelasyon analizinin tutarlı sonuç verebilmesi için gerekli varsayımlar kontrol edilmiştir. İstatistiksel testler, güvenilirlik analizi ve görselleştirmeler ile bulgular yorumlanmıştır. Bu sonuçları elde edebilmek için, Bist 100, Dow Jones, NASDAQ, S&P 500 ve altın senetleri için günlük verileri içeren beş farklı veri seti, Stooq.com adresinden Excel formatında indirilmiştir. 505 gözlemden oluşan bu veriler, Date (Gün), Open (Hisse açılış fiyatı), High (Gün içindeki en yüksek fiyat), Low (Gün içindeki en düşük fiyat), Close (Hisse kapanış fiyatı), Volume (Hisseye gün içinde giren hacim) değişkenlerinden oluşmaktadır. Bu beş farklı veriden Close (Kapanış) değişkenleri seçilerek tek bir veride toplanmıştır. Ardından Date (Gün) değişkenide veriye eklenerek toplam altı değişkenli (4 bağımsız değişken ($X$), 1 bağımlı değişken ($Y$), 1 zaman değişkeni) ve 505 gözlemli tek bir veri seti elde edilmiştir. Her endeksin kapanış değerleri üzerinden analizler gerçekleştirilmiştir.
+
+## Çalışmanın Amacı
+
+Bist 100 endeksi, Türkiye'nin en büyük 100 şirketinin hisse senetlerinin performansını ölçen bir endekstir. Bu endeksin hareketlerinin anlaşılması ve öngörülmesi, yatırımcılar için büyük önem taşımaktadır. Ancak Bist 100 gibi diğer ülkelerin hisse senet performansları, Dow Jones, NASDAQ, S&P 500 ve altın hisse fiyatları gibi dünya genelinde önemli finansal göstergelere bağımlı hareket etmektedir. Bu finansal göstergeler diğer gelişmekte olan ülkelerin hisse senetlerini oldukça etkilemektedir. Bu durumda bu büyük hisselerin kullanıldığı çok değişkenli regresyon modeli, Bist 100 endeksinin hareketlerini görmek ve tahmin etmek için yararlı olabilir. Bu modele dahil edilen bağımsız değişkenlere, diğer borsaların hisse senetleri, dolar/TL döviz kurları, petrol endeksleri, faiz ve enflasyon oranları gibi birçok etken eklenebilir. Bu değişkenlerin her birinin Bist 100 endeksindeki hareketleri üzerindeki etkileri, çok değişkenli regresyon analizi yoluyla yorumlanabilir.
+
+Bu analiz sonuçları, yatırımcıların Bist 100 endeksindeki muhtemel hareketleri anlamalarına ve buna göre yatırım stratejilerini ayarlamalarına yardımcı olabilir. Ayrıca, bu modelin oluşturulması, finansal piyasadaki trendleri analiz etmek ve finansal riskleri yönetmek için kullanılabilecek çok değişkenli regresyon analizinin genel kullanımı hakkında bilgi sağlayabilir.
+
+## Literatür
+
+Dow Jones, NASDAQ, S&P 500, altın ve Bist 100 hisse fiyatları üzerinde çok değişkenli regresyon analizi uygulayarak, bu hisseler üzerinde tahmin modeli kuran oldukça fazla çalışma mevcuttur. @kao2021societal makalesi altın fiyatlarını etkileyen faktörleri analiz ederek, altın fiyatlarını tahmin etmek için çok değişkenli doğrusal regresyon analizini uygular. Bu sayede, ekonomik göstergelerin altın fiyatları üzerindeki etkisini inceleyerek, gelecekteki altın fiyatlarının tahmin edilmesinde yardımcı olabilecek bir model oluşturur. @patel2020facial, NASDAQ hisse senedi fiyatlarını tahmin etmek için regresyon analizi ve yapay sinir ağları yöntemlerini bir arada kullanır ve bu sayede NASDAQ fiyatlarını tahmin etmeye çalışır. @peng2020spillover, @vijh2020stock, @karthikeyan2021predicting ve @jing2021hybrid makaleleri ise Dow Jones, NASDAQ ve S&P 500 hisse senedi fiyatları üzerinde doğrusal regresyon analizi yaparak, gelecekteki hisse senedi fiyatlarını tahmin etmeye çalışır ve fiyatlardaki dalgalanmaların ekonomik faktörler üzerinden nedenlerini araştırır. Araştırma, Makine öğrenimi tekniklerini kullanarak, hisse senedi kapanış fiyatı tahmini için bir model oluşturur. @hasan2020modeling ve @yusuf2022analysis makaleleri, Bist 100 endeksinin fiyat hareketlerinin tahmin edilmesi için makine öğrenmesi tekniklerinin kullanımını araştırır. Çalışmalarda, Bist 100 günlük kapanış fiyatlarının tahmini için işlem hacimleri, dolar/TL kuru, faiz oranları, altın fiyatları ve petrol fiyatları kullanılmıştır. @li2017sentiment ve @gupta2023investor makaleleri ise, hisse senedi fiyat endekslerinin tahmin edilmesi için yapay sinir ağları ve çok değişkenli regresyon modelleri arasındaki farkları incelemektedir. Bu çalışmalarda elde edilen sonuçlar, regresyon analizi yönteminin Bist 100 endeksinin tahmininde etkili bir yöntem olduğunu göstermektedir.
+
+Bu makaleler ve literatürde yer alan diğer makaleler incelendiğinde Dow Jones, NASDAQ, S&P 500 ve altın hisse senedi fiyatları kullanılarak Bist 100 üzerinde tahmin modeli kurulan ve etkilerinin incelendiği çok az makaleye rastlanılmıştır. Dow Jones, NASDAQ, S&P 500 ve altın hisse senedi fiyatlarının bağımsız değişken olarak tutulduğunda, Bist 100 üzerinde çoklu doğrusal regresyon analizinin incelendiği bir modelin sonuçları, literatür için faydalı ve destekleyici olabilecektir. Çünkü yakın tarihte Bist 100'ün göstermiş olduğu performansın analizi, yatırımcılar için diğer etkenlere göre incelenmesi faydalı olacaktır.
+
+
+\newpage
+# Kaynakça {#references}
+<div id="refs"></div>
+
